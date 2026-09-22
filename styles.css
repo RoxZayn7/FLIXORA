@@ -599,3 +599,31 @@ API BANNER
     color: var(--text-muted);
     font-weight: 400;
 }
+
+
+
+/*
+
+    MOVIE ROW - horizontal
+
+*/
+
+
+
+.movie-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    padding: 8px 0 20px;
+    scrollbar-width: none;
+}
+
+.movie-row::-webkit-scrollbar {
+    display: none;
+}
+
+.movie-row .movie-card {
+    flex: 0 0 210px;
+}
