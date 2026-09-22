@@ -395,3 +395,109 @@ API BANNER
 .selects select:focus {
     border-color: var(--red);
 }
+
+
+/*
+
+    HERO
+
+*/
+
+
+
+.hero {
+    position: relative;
+    height: 92vh;
+    min-height: 560px;
+    max-height: 900px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    margin-top: -80px;
+    padding-top: 80px;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    transform: scale(1.02);
+    transition: transform 8s ease;
+}
+
+.hero:hover .hero-bg {
+    transform: scale(1.06);
+}
+
+.hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(77deg, rgba(0, 0, 0, .85) 0%, rgba(0, 0, 0, .5) 40%, transparent 75%), linear-gradient(0deg, var(--bg) 0%, transparent 55%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 80px;
+    max-width: 720px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .18);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: .08em;
+    font-weight: 700;
+    margin-bottom: 16px;
+    backdrop-filter: blur(6px);
+}
+
+.hero-title {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: .95;
+    letter-spacing: -.03em;
+    margin-bottom: 14px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, .8);
+}
+
+.hero-overview {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ddd;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 16px;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, .8);
+}
+
+.hero-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 22px;
+    align-items: center;
+}
+
+.meta-rating {
+    background: #e5c100;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+}
+
