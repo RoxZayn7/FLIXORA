@@ -627,3 +627,28 @@ API BANNER
 .movie-row .movie-card {
     flex: 0 0 210px;
 }
+
+
+/*
+
+    GRID
+
+*/
+
+
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+}
+
+.active-filter-info {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.active-filter-info b {
+    color: #fff;
+}
