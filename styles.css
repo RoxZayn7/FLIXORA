@@ -750,3 +750,23 @@ API BANNER
     text-align: center;
     padding: 12px;
 }
+
+
+/*
+
+    EMPTY
+
+*/
+
+
+
+.empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.empty h3 {
+    color: #fff;
+    margin-bottom: 6px;
+}
