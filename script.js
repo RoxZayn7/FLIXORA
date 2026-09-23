@@ -183,3 +183,33 @@ currentPage=1; fetchDiscover();
 updateFilterInfo();
     }));
 }
+
+async function tmdbFetch(path, params={}) {
+    if(!apiKey) throw new Error('No API key');
+    const url=new URL(API_BASE+path);
+    url.searchParams.set('api_key', apiKey);
+    url.searchParams.set('language', 'en-US');
+
+Object.entries(params).forEach(([k,v])=> {
+    if(v!=='' && v!=null)
+    url.searchParams.set(k,String(v));
+    });
+    const r=await fetch(url.toString());
+    if(!r.ok){ const t=await r.text();
+throw new Error(t); }
+    return r.json();
+}
+
+async function fetchTrending() {
+    try {
+        setLoading(true);
+        const data=await tmdbFetch('/trending/all/week');
+        const movies=data.results?.filter(m=>m.poster_path)?.slice(0,12) || DEMO_MOVIES;
+        if(!currentHeroMovie) renderHero(movies[0]||DEMO_MOVIES[0]);
+        renderRow(trendingRow, movies);
+    } catch(e) {
+        console.warn('trending fail',e);
+        renderRow(trendingRow, DEMO_MOVIES);
+        if(!currentHeroMovie) renderHero(DEMO_MOVIES[0]);
+    } finally{ setLoading(false); }
+}
