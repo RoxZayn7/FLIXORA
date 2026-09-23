@@ -129,4 +129,57 @@ function bindEvents() {
             fetchDiscover(true);
         }
     });
+
+    modalBackdrop.addEventListener('click', closeModalFn);
+    closeModal.addEventListener('click', closeModalFn);
+    document.addEventListener('keydown', (e)=>{
+        if(e.key==='Escape')
+            closeModalFn();
+    });
+    heroPlay.addEventListener('click', ()=> currentHeroMovie && openModalFor(currentHeroMovie));
+    heroInfo.addEventListener('click', ()=> currentHeroMovie && openModalFor(currentHeroMovie));
+}
+
+async function boot(){
+    await fetchGenres();
+    await Promise.all([fetchTrending(), fetchDiscover()]);
+}
+
+function renderDemo() {
+    currentMovies = DEMO_MOVIES;
+    renderGenresDemo();
+    renderHero(DEMO_MOVIES[0]);
+    renderRow(trendingRow, DEMO_MOVIES.slice(0,6));
+    renderGrid(DEMO_MOVIES, false);
+    updateFilterInfo(true);
+}
+
+function renderGenresDemo() {
+    const base = [{id:28,name:'Action'}, {id:35,name:'Comedy'}, {id:18,name:'Drama'}, {id:878,name:'Horror'}, {id:10749,name:'Romance'}];
+    allGenres=base; drawChips();
+}
+
+async function fetchGenres() {
+    try {
+        const [m,t] = await
+Promise.all([tmdbFetch('genre/movie/list'), tmdbFetch('genre/tv/list')]);
+        const map=new Map(); [...$(m.genres||[]), ...$(t.genres||[])].forEach(g=>map.set(g.id,g));
+        allGenres=[...map.values()];
+        drawChips();
+    } catch(e) { console.warn('genres fail', e); renderGenresDemo(); }
+}
+
+function drawChips() {
+    const list=[{id:null,name:'All'}, ...allGenres.slice(0,14)];
+
+genreChips.innerHTML=list.map(g=>`<button class="chip ${activeGenre===g.id?'active':''}" data-id="${g.id ?? ''}">${g.name} </button>`).join('');
+
+genreChips.querySelectorAll('.chip').forEach(ch=> ch.addEventListener('click', ()=> {
+    const id=ch.dataset.id?Number(ch.dataset.id): null;
+    activeGenre=id;
+
+genreChips.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c===ch));
+currentPage=1; fetchDiscover();
+updateFilterInfo();
+    }));
 }
