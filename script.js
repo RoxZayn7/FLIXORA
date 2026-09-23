@@ -213,3 +213,37 @@ async function fetchTrending() {
         if(!currentHeroMovie) renderHero(DEMO_MOVIES[0]);
     } finally{ setLoading(false); }
 }
+
+async function fetchDiscover(append=false) {
+    if(!apiKey){
+        let filtered=[...DEMO_MOVIES];
+        if(activeGenre)filtered=filtered.filter(m=>m.genre_ids?.includes(activeGenre));
+        if(filter.year)filtered=filtered.filter(m=>(m.release_date||'').startsWith(filters.year));
+        if(filters.rating)filtered=filtered.filter(m=>m.vote_average>=Number(filters.rating));
+        if(filters.type!=='all')filtered=filtered.filter(m=>m.media_type===filters.type);
+        renderGrid(filtered, appent);
+        return;
+    }
+    try{
+        setLoading(true);
+        const isTV = filters.type==='tv';
+        const path = isTV ? '/discover/tv' : '/discover/movie';
+        const p = { page: currentPage, sort_by:'popularity.desc', with_genres:activeGenre||'', primary_release_year:filters.type!=='tv'? filters.year: '', first_air_date_year:filters.type==='tv'? filters.year:'', 'vote_average.gte': filters.rating||''};
+        if(filters.type==='all'){
+            delete p.first_air_date_year;
+        }
+        const data=await tmdbFetch(path, p);
+
+    totalPages=Math.min(data.total_pages||1,20);
+        let results=data.results||[];
+        if(filters.type==='all' && !searchQuery){
+            // leave
+        }
+        currentMovies = append? [...currentMovies, ...results] : results;
+        renderGrid(results, append);
+    }catch(e){ console.error(e);
+        if(!append)
+        renderGrid(DEMO_MOVIES, false);
+    }
+    finally{ setLoading(false); }
+}
