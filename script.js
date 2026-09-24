@@ -3,14 +3,14 @@ const IMG_W500 = 'https://image.tmdb.org/t/p/w500';
 const IMG_ORIG = 'https://image.tmdb.org/t/p/original';
 
 const DEMO_MOVIES = [
-    { id:1, title: "Dune: Part Two", overview: "Follow the mythic journey of Paul Atreides as he unites on a warpath of revenge.", poster_path: SVGPoster("DUNE2", "#1a1a1a"), backdrop_path: svgBackdrop("#0f0f0f"), vote_average:8.3, release_date:"2024-02-27", genre_ids:[878,12], media_type:"movie" },
-    { id:2, title: "The Night Agent", overview: "A low-life FBI agent works in the basement of the White House, manning a phone that never rings - until the night it does.", poster_path: SVGPoster("NIGHT AGENT", "#1e1e1e"), backdrop_path: svgBackdrop("#12121a"), vote_average:7.8, release_date:"2023-03-23", genre_ids:[80,18], media_type:"tv" },
-    { id:3, title: "Oppenheimer", overview: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.", poster_path: SVGPoster("OPPENHEIMER", "#2a1a0a"), backdrop_path: svgBackdrop("#1a1200"), vote_average:8.1, release_date:"2023-07-19", genre_ids:[36,18], media_type:"movie" },
-    { id:4, title: "Stranger Things", overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.", poster_path: SVGPoster("STRANGER", "#0a1a2a"), backdrop_path: svgBackdrop("#0a121a"), vote_average:8.6, release_date:"2016-07-15", genre_ids:[18,10765, 9648], media_type:"tv" },
-    { id:5, title: "The Batman", overview: "When a sadistic serial killer begins murdering key political figures in Gotham, Batman is forced to investigate.", poster_path: SVGPoster("THE BATMAN", "#101010"), backdrop_path: svgBackdrop("#0a0a0a"), vote_average:7.7, release_date:"2022-03-01", genre_ids:[80,53,28], media_type:"movie" },
-    { id:6, title: "Wednesday", overview: "Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder spree while making new friends - and foes - at Nevermore Academy.", poster_path: SVGPoster("WEDNESDAY", "#1a0a1a"), backdrop_path: svgBackdrop("#120a12"), vote_average:8.4, release_date:"2022-11-23", genre_ids:[10765,35,9648], media_type:"tv" },
-    { id:7, title: "Inception", overview: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.", poster_path: SVGPoster("INCEPTION", "#0a1a1a"), backdrop_path: svgBackdrop("#0a1212"), vote_average:8.4, release_date:"2010-07-15", genre_ids:[28,878,12], media_type:"movie" },
-    { id:8, title: "Interstellar", overview: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.", poster_path: SVGPoster("INTERSTELLAR", "#0a0a1e"), backdrop_path: svgBackdrop("#0a0a14"), vote_average:8.4, release_date:"2014-11-05", genre_ids:[12,18,878], media_type:"movie" },
+    { id:1, title: "Dune: Part Two", overview: "Follow the mythic journey of Paul Atreides as he unites on a warpath of revenge.", poster_path: 'https://picsum.photos/seed/dune2/500/750', backdrop_path: 'https://picsum.photos/seed/dune2/1280/720', vote_average:8.3, release_date:"2024-02-27", genre_ids:[878,12], media_type:"movie" },
+    { id:2, title: "The Night Agent", overview: "A low-life FBI agent works in the basement of the White House, manning a phone that never rings - until the night it does.", poster_path: 'https://picsum.photos/seed/nightagent/500/750', backdrop_path: 'https://picsum.photos/seed/nightagent/1280/720', vote_average:7.8, release_date:"2023-03-23", genre_ids:[80,18], media_type:"tv" },
+    { id:3, title: "Oppenheimer", overview: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.", poster_path: 'https://picsum.photos/seed/oppenheimer/500/750', backdrop_path: 'https://picsum.photos/seed/oppenheimer/1280/720', vote_average:8.1, release_date:"2023-07-19", genre_ids:[36,18], media_type:"movie" },
+    { id:4, title: "Stranger Things", overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.", poster_path: 'https://picsum.photos/seed/strangerthings/500/750', backdrop_path: 'https://picsum.photos/seed/strangerthings/1280/720', vote_average:8.6, release_date:"2016-07-15", genre_ids:[18,10765, 9648], media_type:"tv" },
+    { id:5, title: "The Batman", overview: "When a sadistic serial killer begins murdering key political figures in Gotham, Batman is forced to investigate.", poster_path: 'https://picsum.photos/seed/batman/500/750', backdrop_path: 'https://picsum.photos/seed/batman/1280/720', vote_average:7.7, release_date:"2022-03-01", genre_ids:[80,53,28], media_type:"movie" },
+    { id:6, title: "Wednesday", overview: "Smart, sarcastic and a little dead inside, Wednesday Addams investigates a murder spree while making new friends - and foes - at Nevermore Academy.", poster_path: 'https://picsum.photos/seed/wednesday/500/750', backdrop_path: 'https://picsum.photos/seed/wednesday/1280/720', vote_average:8.4, release_date:"2022-11-23", genre_ids:[10765,35,9648], media_type:"tv" },
+    { id:7, title: "Inception", overview: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.", poster_path: 'https://picsum.photos/seed/inception/500/750', backdrop_path: 'https://picsum.photos/seed/inception/1280/720', vote_average:8.4, release_date:"2010-07-15", genre_ids:[28,878,12], media_type:"movie" },
+    { id:8, title: "Interstellar", overview: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.", poster_path: 'https://picsum.photos/seed/interstellar/500/750', backdrop_path: 'https://picsum.photos/seed/interstellar/1280/720', vote_average:8.4, release_date:"2014-11-05", genre_ids:[12,18,878], media_type:"movie" },
 ];
 
 const GENRES_MAP = { 28:"Action", 12:"Adventure", 16:"Animation", 35:"Comedy", 80:"Crime", 99:"Documentary", 18:"Drama", 10751:"Family", 14:"Fantasy", 36:"History", 27:"Horror", 10402:"Music", 9648:"Mystery", 10749:"Romance", 878:"Sci-Fi", 10770:"TV Movie", 53:"Thriller", 10752:"War", 37:"Western", 10759:"Action & Adventure", 10765:"Sci-Fi & Fantasy", 10762:"Kids", 10763:"News", 10764:"Reality", 10767:"Talk" };
@@ -316,7 +316,7 @@ updateFilterInfo();
 
 function cardHTML(m) {
     const title=m.title||m.name||'Untitled';
-    const img = m.poster_path ? (m.poster_path.startsWith('http')? m.poster_path : IMG_W500+m.poster_path) : '';
+    const img = m.poster_path ? (m.poster_path.startsWith('http') || m.poster_path.startsWith('data') ? m.poster_path : IMG_W500+m.poster_path) : '';
     const year=(m.release_date||m.first_air_date_||'').slice(0,4);
     const rating=m.vote_average?m.vote_average.toFixed(1):'-';
     return `<div class="movie-card" title="${escapeHtml(title)}"> ${img ? `<img loading="lazy" src=${img}" alt="${escapeHtml(title)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">` : ''}
@@ -333,8 +333,8 @@ async function openModalFor(movie){
     modal.classList.remove('hidden');
     document.body.style.overflow='hidden';
     const title=movie.title||movie.name||'Untitled';
-    const poster = movie.poster_path ? (movie.poster_path.startsWith('http')? movie.poster_path : IMG_W500+movie.poster_path) : '';
-    const backup = movies.backdrop_path ? (movie.backdrop_path.startsWith('http')? movie.backdrop_path : IMG_ORIG+movie.backdrop_path) : poster;
+    const poster = movie.poster_path ? (movie.poster_path.startsWith('http') || movie.poster_path.startsWith('data') ? movie.poster_path : IMG_W500+movie.poster_path) : '';
+    const backup = movies.backdrop_path ? (movie.backdrop_path.startsWith('http') || movie.backdrop_path.startsWith('data') ? movie.backdrop_path : IMG_ORIG+movie.backdrop_path) : poster;
     modalHero,style.backgroundImage = backdrop ? `url('${backdrop}')` : 'none';
     modalPoster.src = poster || '';
     modalTitle.textContent = title;
