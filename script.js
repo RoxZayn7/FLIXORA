@@ -56,7 +56,7 @@ const modalOverview = $("#modalOverview");
 const modalTrailer = $("#modalTrailer");
 
 // State
-let apiKey = localStorage.getItem('tmdb_api_key') || '';
+let apiKey = '';
 let allGenres = [];
 let activeGenre = null;
 let currentPage = 1;
@@ -70,26 +70,71 @@ let currentMovies = [];
 // Init
 function init() {
     buildYearOptions();
-    if(!apiKey) {
-        apiBanner.classList.remove('hidden');
-        renderDemo();
-    }
-    else {
-        apiBanner.classList.add('hidden');
-        apiKeyInput.value = apiKey;
-        boot();
-    }
     bindEvents();
-    window.addEventListener('scroll', ()=> header.classList.toggle('scrolled', window.scrollY>20));
+    const stored = localStorage.getItem('tmdb_api_key');
+    apiKey = stored || '';
+    if(apiKeyInput && apiKey)
+        apiKeyInput.value = apiKey;
+
+    if(!apiKey) {
+        loadDemoData();
+        const ld = document.getElementById('loader');
+        if(ld) ld.classList.add('hidden');
+        const ld = document.getElementById('loadMoreBtn');
+        if(ld) ld.style.display='none';
+        return;
+}
+
+boot().catch((e)=>{
+    console.warn('TMDB boot failed, falling back to demo', e);
+    loadDemoData();
+    const ld = document.getElementById('loader');
+    if(ld) ld.classList.add('hidden');
+});
 }
 
 function buildYearOptions() {
-    for (let y=2025; y>=2000; y--) {
+    if(!yearFilter) return;
+    for(let y=2024;y>=2000;y--){
         const o=document.createElement('option');
         o.value=String(y);
         o.textContent=String(y);
         yearFilter.appendChild(o);
     }
+}
+
+function loadDemoData(){
+    const strong = document.querySelector('#apiBanner .api-text strong');
+    if(strong) strong.textContent = 'Demo Mode Active - Real posters, no key needed. Add TMDB key for live data.';
+    currentMovies = [...DEMO_MOVIES];
+    allGenres = [{id:28,name:"Action"}, {id:12,name:"Adventure"}, {id:16,name:"Animation"}, {id:35,name:"Comedy"}, {id:80,name:"Crime"}, {id:18,name:"Drama"}, {id:878,name:"Sci-Fi"}, {id:27,name:"Horror"}, {id:10749,name:"Romance"}];
+    drawChips();
+    renderHero(DEMO_MOVIES[0]);
+    renderRow(trendingRow, DEMO_MOVIES.slice(0,6));
+    renderGrid(DEMO_MOVIES, false);
+    updateFilterInfo(true);
+    const ld=document.getElementById('loader');
+    if(ld) ld.classList.add('hidden');
+    const lb = document.getElementById('loadMoreBtn');
+    if(lb) lb.style.display='none';
+}
+
+function getFilteredDemo(){
+    let filtered=[...DEMO_MOVIES];
+    if(activeGenre) filtered=filtered.filter(m=>(m.genre_ids || []).includes(activeGenre));
+    if(filters.year) filtered=filtered.filter(m=>(m.release_date || m.first_air_date||'')).startsWith(filters.year);
+    if(filters.rating) filtered=filtered.filter(m=>m.vote_average>=Number(filters.rating));
+    if(filters.type!=='all'){
+        filtered=filtered.filter(m=>{
+            const t = m.media_type || (m.first_air_date ? 'tv' : 'movie');
+            return t===filters.type;
+        });
+    }
+    if(searchQuery){
+        const q=searchQuery.toLowerCase();
+        filtered=filtered.filter(m=>(m.title||m.name||'').toLowerCase().includes(q));
+    }
+    return filtered;
 }
 
 function bindEvents() {
@@ -99,7 +144,7 @@ function bindEvents() {
         apiKey=v;
         localStorage.setItem('tmdb_api_key', v);
         apiBanner.classList.add('hidden');
-        boot();
+        boot().catch(()=> loadDemoData());
     });
 
     dismissBanner?.addEventListener('click', ()=> apiBanner.classList.add('hidden'));
