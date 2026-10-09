@@ -1155,3 +1155,18 @@ modalIn {from {transform: scale(.92) translateY(20px); opacity: 0} to {transform
 .chip, .btn, .movie-card, .selects select {
     will-change: transform
 }
+
+
+
+/*
+
+    FOCUS
+
+*/
+
+
+
+button:focus-visible, select:focus-visible, input:focus-visible{
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+}
