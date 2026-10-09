@@ -566,3 +566,36 @@ API BANNER
     background: #2a2a2a;
     border-color: #444;
 }
+
+
+/*
+
+    MAIN
+
+*/
+
+
+
+.main {
+    padding: 0 48px 80px;
+    background: var(--bg);
+}
+
+.row-section {
+    margin-bottom: 40px;
+}
+
+.row-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.row-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+}
