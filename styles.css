@@ -1060,6 +1060,7 @@ modalIn {from {transform: scale(.92) translateY(20px); opacity: 0} to {transform
 
     .hero-overview {
         font-size: 14px;
+        line-clamp: 2;
         -webkit-line-clamp: 2;
     }
 
@@ -1134,4 +1135,23 @@ modalIn {from {transform: scale(.92) translateY(20px); opacity: 0} to {transform
     .row-title {
         font-size: 18px;
     }
+}
+
+
+
+/*
+
+    ANIMATIONS
+
+*/
+
+
+
+.movie-card {
+    animation: cardIn .5s ease both;
+}
+@keyframes cardIn {from {opacity: 0; transform: translateY(12px)} to {opacity: 1; transform: translateY(0)}}
+
+.chip, .btn, .movie-card, .selects select {
+    will-change: transform
 }
