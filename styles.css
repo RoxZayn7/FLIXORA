@@ -804,3 +804,172 @@ API BANNER
 
 @keyframes
 spin {to {transform:rotate(360deg)}}
+
+
+/*
+
+    MODAL
+
+*/
+
+
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .84);
+    backdrop-filter: blur(8px);
+}
+
+.modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #181818;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .8);
+    animation: modalIn .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes
+modalIn {from {transform: scale(.92) translateY(20px); opacity: 0} to {transform: scale(1) translateY(0); opacity: 1;}}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .7);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: .2s;
+}
+
+.modal-close:hover {
+    background: var(--red);
+}
+
+.modal-hero {
+    height: 420px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.modal-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, #181818 0%, rgba(24, 24, 24, .7) 35%, transparent 70%);
+}
+
+.modal-body {
+    display: flex;
+    gap: 22px;
+    padding: 22px;
+    margin-top: -120px;
+    position: relative;
+    z-index: 1;
+}
+
+.modal-poster-wrap {
+    flex: 0 0 160px;
+}
+
+.modal-poster-wrap img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    background: #222;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+}
+
+.modal-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.modal-info h2 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    color: #bbb;
+}
+
+.badge-rating {
+    padding: 3px 7px;
+    border-radius: 4px;
+    background: #f5c518;
+    color: #000;
+    font-weight: 800;
+}
+
+.badge-type {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #222;
+    border: 1px solid #333;
+    color: #ddd;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.modal-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.modal-genres span {
+    padding: 5px 10px;
+    background: #262626;
+    border: 1px solid #333;
+    border-radius: 999px;
+    font-size: 11px;
+    color: #ccc;
+}
+
+.modal-info p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #c8c8c8;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
