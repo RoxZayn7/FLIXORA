@@ -501,3 +501,68 @@ API BANNER
     gap: 12px;
 }
 
+.btn {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 26px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: .2s;
+    letter-spacing: .01em;
+}
+
+.btn-play {
+    background: #fff;
+    color: #000;
+}
+
+.btn-play:hover {
+    background: rgba(255, 255, 255, .75);
+}
+
+.btn-info {
+    background: rgba(109, 109, 110, .7);
+    color: #fff;
+    backdrop-filter: blur(4px);
+}
+
+.btn-info:hover {
+    background: rgba(109, 109, 110, .4);
+}
+
+.btn.small {
+    padding: 9px 18px;
+    font-size: 14px;
+}
+
+.btn-trailer {
+    background: var(--red);
+    color: #fff;
+}
+
+.btn-trailer:hover {
+    background: var(--red-hover);
+}
+
+.btn-load {
+    background: #222;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 20px auto;
+    display: block;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-load:hover {
+    background: #2a2a2a;
+    border-color: #444;
+}
