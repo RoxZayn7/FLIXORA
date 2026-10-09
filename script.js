@@ -372,3 +372,35 @@ async function openModalFor(movie){
 
     document.getElementById('modalPlay')?.addEventListener('click', ()=> alert(`Playing: ${title} - Demo Player`));
 }
+
+function closeModalFn(){
+    modal.classList.add('hidden');
+    document.body.style.overflow='';
+}
+
+function setLoading(v){
+    isLoading=v;
+    loader.classList.toggle('hidden', !v);
+    loadMoreBtn.style.opacity = v ? '.5' : '1';
+    loadMoreBtn.style.pointerEvents = v ? 'none' : 'auto';
+}
+
+function updateFilterInfo(isDemo){
+    let parts=[];
+    if(activeGenre){ const g=allGenres.find(x=>x.id===activeGenre);
+        if(g) parts.push(g.name);
+    }
+    if(filters.year) parts.push(filters.year);
+    if(filters.rating) parts.push(`≥${filters.rating}★`);
+    if(filters.type!=='all') parts.push(filters.type==='movie'?'Movies':'TV Shows');
+    if(searchQuery) parts.push(`Search:"${searchQuery}"`);
+    if(!parts.length){
+        activeFilterInfo.innerHTML = isDemo? '<b>Demo Mode</b> - Add TMDB key to load real trending titles. Filtering works on demo set.' : 'Showing <b> Popular </b> titles'; return;
+    }
+    activeFilterInfo.innerHTML = `Filtered by <b>${parts.join('•')}</b> - ${currentMovies.length} results`;
+}
+
+function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t);
+    t=setTimeout(()=>fn(...a), ms); }; }
+
+init();
