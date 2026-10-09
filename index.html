@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLIXORA - Unlimited Movies & TV </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;70;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- API KEY BANNER -->
+    <div id="apiBanner" class="api-banner">
+        <div class="api-banner-inner">
+            <span class="api-icon">🔑</span>
+            <div class="api-text">
+                <strong> Enter TMDB API Key to load movies</strong>
+                <p> Get your free key at <a href="https://www.themoviedb.org/settings/api" target="_blank"> themoviedb.org/settings/api</a> - Demo data shown until you add key </p>
+            </div>
+            <div class="api-input-wrap">
+                <input id="apiKeyInput" type="password" placeholder="Paste TMDB API Key here...">
+                <button id="saveApiKeyBtn"> Save & Load</button>
+            </div>
+            <button id="dismissBanner" class="dismiss"> X </button>
+        </div>
+    </div>
+    
+    <!-- HEADER -->
+    <header id="header" class="header">
+        <div class="header-left">
+            <div class="logo">FLIXORA</div>
+            <nav class="nav-links">
+                <a class="active">Home</a>
+                <a>TV Shows</a>
+                <a>Movies</a>
+                <a>New & Popular</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="search-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8">
+                        <path d="m21 21-4.3-4.3"></path>
+                    </circle>
+                </svg>
+                <input id="searchInput" type="text" placeholder="Titles, people, genres">
+            </div>
+            <div class="avatar">F</div>
+            <button id="mobileMenuBtn" class="mobile-menu">☰</button>
+        </div>
+    </header>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <div class="filter-row">
+            <div class="chips-wrap" id="genreChips">
+                <!-- injected -->
+            </div>
+            <div class="selects">
+                <select id="yearFilter"> <option value="">Year: All </option> </select>
+                <select id="ratingFilter"> <option value=""> Rating: All</option>
+                    <option value="8"> ★ 8.0+ Top </option>
+                    <option value="7"> ★ 7.0+ Great </option>
+                    <option value="6"> ★ 6.0+ Good </option>
+                    <option value="5"> ★ 5.0+ </option>
+                </select>
+                <select id="typeFilter">
+                    <option value="all"> Type: All</option>
+                    <option value="movie"> Movies</option>
+                    <option value="tv"> TV Shows</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Top 10 • #1 IN MOVIES TODAY </div>
+            <h1 id="heroTitle" class="hero-title">Loading... </h1>
+            <p id="heroOverview" class="hero-overview"></p>
+            <div class="hero-meta">
+                <span id="heroYear"></span>
+                <span id="heroType"></span>
+            </div>
+            <div class="hero-actions">
+                <button id="heroPlay" class="btn btn-play"><span>▶</span>Play</button>
+                <button id="heroInfo" class="btn btn-info"><span>🛈</span>More Info</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT -->
+    <main class="main">
+        <section class="row-section" id="trendingSection">
+            <h2 class="row-title"> Trending Now <span class="row-sub"> Explosive this week</span></h2>
+            <div id="trendingRow" class="movie-row"></div>
+        </section>
+
+        <section class="row-section">
+            <h2 class="row-title">Discover</h2>
+            <div id="activeFilterInfo" class="active-filter-info"></div>
+            <div id="movieGrid" class="movie-grid"></div>
+            <div class="load-more-wrap">
+                <button id="loadMoreBtn" class="btn-load"> Load More</button>
+                <div id="loader" class="loader hidden"></div>
+            </div>
+            <div id="emptyState" class="empty hidden">
+                <h3> No titles found</h3>
+                <p> Try adjusting filters or search </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-card">
+            <button id="closeModal" class="modal-close">X</button>
+            <div id="modalHero" class="modal-hero"></div>
+            <div class="modal-body">
+                <div class="modal-poster-wrap">
+                    <img id="modalPoster" alt="poster">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <div class="modal-meta">
+                        <span id="modalRating" class="badge-rating"></span>
+                        <span id="modalDate"></span>
+                        <span id="modalRuntime"></span>
+                        <span id="modalTypeBadge" class="badge-type"></span>
+                    </div>
+                    <div id="modalGenres" class="modal-genres"></div>
+                    <p id="modalOverview"></p>
+                    <div class="modal-actions">
+                        <button id="modalPlay" class="btn btn-play small"><span>▶</span>Play</button>
+                        <button id="modalTrailer" class="btn btn-trailer"> ▶ Watch Trailer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p> FLIXORA • Built with TMDB API • Demo UI - Not affiliated with Netflix </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
