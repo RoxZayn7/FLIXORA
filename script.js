@@ -68,3 +68,65 @@ let currentHeroMovie = null;
 let currentMovies = [];
 
 // Init
+function init() {
+    buildYearOptions();
+    if(!apiKey) {
+        apiBanner.classList.remove('hidden');
+        renderDemo();
+    }
+    else {
+        apiBanner.classList.add('hidden');
+        apiKeyInput.value = apiKey;
+        boot();
+    }
+    bindEvents();
+    window.addEventListener('scroll', ()=> header.classList.toggle('scrolled', window.scrollY>20));
+}
+
+function buildYearOptions() {
+    for (let y=2025; y>=2000; y--) {
+        const o=document.createElement('option');
+        o.value=String(y);
+        o.textContent=String(y);
+        yearFilter.appendChild(o);
+    }
+}
+
+function bindEvents() {
+    saveApiKeyBtn?.addEventListener('click', ()=> {
+        const v=apiKeyInput.value.trim();
+        if(!v) return alert('Paste a valid TMDB API Key');
+        apiKey=v;
+        localStorage.setItem('tmdb_api_key', v);
+        apiBanner.classList.add('hidden');
+        boot();
+    });
+
+    dismissBanner?.addEventListener('click', ()=> apiBanner.classList.add('hidden'));
+    searchInput?.addEventListener('input', debounce((e)=> {
+        searchQuery=e.target.value.trim();
+        currentPage=1; if(searchQuery) doSearch(); else fetchDiscover();
+    }, 400));
+    yearFilter.addEventListener('change', (e)=>{
+        filters.year=e.target.value;
+        currentPage=1; fetchDiscover();
+        updateFilterInfo();
+    });
+
+    ratingFilter.addEventListener('change', (e)=>{
+        filters.rating=e.target.value;
+        currentPage=1; fetchDiscover();
+        updateFilterInfo();
+    });
+    typeFilter.addEventListener('change', (e)=>{
+        filters.rating=e.target.value;
+        currentPage=1; fetchDiscover();
+        updateFilterInfo();
+    });
+    loadMoreBtn.addEventListener('click', ()=>{
+        if(currentPage<totalPages){
+            currentPages++; if(searchQuery) doSearch(true); else 
+            fetchDiscover(true);
+        }
+    });
+}
