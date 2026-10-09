@@ -991,3 +991,147 @@ modalIn {from {transform: scale(.92) translateY(20px); opacity: 0} to {transform
     border-top: 1px solid var(--border);
     margin-top: 40px;
 }
+
+
+/*
+
+    RESPONSIVE
+
+*/
+
+
+
+@media(max-width: 1280px) {
+    .movie-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .header, .filter-bar, .main, .hero-content {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .movie-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .hero-title {
+        font-size: 44px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .movie-row .movie-card {
+        flex: 0 0 180px;
+    }
+}
+
+@media(max-width: 768px) {
+    .header {
+        padding: 12px 16px;
+    }
+
+    .filter-bar {
+        padding: 10px 16px;
+        top: 56px;
+    }
+
+    .main, .hero-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero {
+        height: 78vh;
+        min-height: 480px;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-overview {
+        font-size: 14px;
+        -webkit-line-clamp: 2;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .movie-row .movie-card {
+        flex: 0 0 150px;
+    }
+
+    .modal-body {
+        flex-direction: column;
+    }
+
+    .modal-poster-wrap {
+        flex: 0 0 auto;
+        width: 120px;
+    }
+
+    .modal-hero {
+        height: 260px;
+    }
+
+    .search-box {
+        width: 160px;
+    }
+
+    .search-box:focus-within {
+        width: 180px;
+    }
+
+    .selects {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+@media(max-width: 480px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .api-banner-inner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .api-input-wrap {
+        max-width: none;
+    }
+
+    .movie-row .movie-card {
+        flex: 0 0 130px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .hero-actions {
+        flex-wrap: wrap;
+    }
+
+    .row-title {
+        font-size: 18px;
+    }
+}
