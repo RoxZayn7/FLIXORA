@@ -247,3 +247,128 @@ async function fetchDiscover(append=false) {
     }
     finally{ setLoading(false); }
 }
+
+async function doSearch(append=false){
+    if(!apiKey){
+        const q=searchQuery.toLowerCase();
+        const filter=DEMO_MOVIES.filter(m=>m.title.toLowerCase().includes(q) || m.overview.toLowerCase().includes(q));
+        renderGrid(filtered,false); return;
+    }
+    try{
+        setLoading(true);
+        const data=await tmdbFetch('/search/multi', { query: searchQuery, page: currentPage, include_adult:false});
+        const results=(data.results||[]).filter(r=>(r.media_type==='movie'||r.media_type==='tv') && r.poster_path);
+
+        totalPages=Math.min(data.total_pages||1,10);
+        renderGrid(results, append);
+    }catch(e){ console.error(e); }
+    finally{ setLoading(false); }
+}
+
+function renderHero(movie){
+    if(!movie) return;
+currentHeroMovie=movie;
+    const title=movie.title || movie.name || 'Untitled';
+    const backdrop = movie.backdrop_path ? (movie.backdrop_path.startsWith('http')? movie.backdrop_path : IMG_ORIG+movie.backdrop_path) : (movie.poster_path?.startsWith('http')? movie.poster_path : IMG_ORIG+movie.poster_path);
+
+heroBg.style.backgroundImage=`url('${backdrop}')`;
+    heroTitle.textContent=title;
+
+heroOverview.textContent=movie.overview || 'No overview available.';
+    heroRating.textContent = movie.vote_average ? `★ ${movie.vote_average.toFixed(1)}` : '★ New';
+    heroYear.textContent = (movie.release_date || movie.first_air_date_year || '').slice(0,4) || '2024';
+    heroType.textContent = (movie.media_type==='tv' ? 'TV Series' : 'Movie').toUpperCase();
+}
+
+function renderRow(container, movies){
+    container.innerHTML = movies.map(m=>cardHTML(m)).join('');
+    container.querySelectorAll('.movie-card').forEach((el,i)=>
+    el.addEventListener('click', ()=> openModalFor(movies[i])));
+}
+
+function renderGrid(movies, append){
+    if(!append) movieGrid.innerHTML='';
+    if(!movies.length && !append){
+        movieGrid.innerHTML='';
+        emptyState.classList.remove('hidden');
+        loadMoreBtn.classList.add('hidden');
+    return; }
+}
+
+emptyState.classList.add('hidden');
+const html = movies.map(m=>cardHTML(m)).join('');
+if (append)
+    movieGrid.insertAdjustmentHTML('beforeend', html);
+else movieGrid.innerHTML=html;
+const allCards = movieGrid.querySelectorAll('.movie-card');
+const offset = append ? currentMovies.length - movies.lenth : 0;
+movieGrid.querySelectorAll('.movie-card').forEach((card, idx)=>{
+    card.onclick = ()=> {
+        const list = append ? currentMovies : movies;
+        const movie = (append ? currentMovies[idx] : movies[idx]) || movies[idx % movies.length];
+        openModalFor(movie);
+    };
+});
+if(!append) currentMovies=movies;
+loadMoreBtn.classList.toggle('hidden', currentPage>=totalPages || movies.length<6);
+updateFilterInfo();
+}
+
+function cardHTML(m) {
+    const title=m.title||m.name||'Untitled';
+    const img = m.poster_path ? (m.poster_path.startsWith('http')? m.poster_path : IMG_W500+m.poster_path) : '';
+    const year=(m.release_date||m.first_air_date_||'').slice(0,4);
+    const rating=m.vote_average?m.vote_average.toFixed(1):'-';
+    return `<div class="movie-card" title="${escapeHtml(title)}"> ${img ? `<img loading="lazy" src=${img}" alt="${escapeHtml(title)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">` : ''}
+    <div class="fallback-poster" style="${img?'display:none':''}">${escapeHtml(title)}</div>
+    <div class="card-overlay">
+    <div class="card-title">${escapeHtml(title)}</div>
+    <div class="card-meta"><span class=badge badge-rating">★ ${rating}</span> ${year? `<span class="badge badge-year">${year}</span>`:''}</div>
+    </div>
+    </div>`;
+}
+
+async function openModalFor(movie){
+    if(!movie) return;
+    modal.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    const title=movie.title||movie.name||'Untitled';
+    const poster = movie.poster_path ? (movie.poster_path.startsWith('http')? movie.poster_path : IMG_W500+movie.poster_path) : '';
+    const backup = movies.backdrop_path ? (movie.backdrop_path.startsWith('http')? movie.backdrop_path : IMG_ORIG+movie.backdrop_path) : poster;
+    modalHero,style.backgroundImage = backdrop ? `url('${backdrop}')` : 'none';
+    modalPoster.src = poster || '';
+    modalTitle.textContent = title;
+    modalRating.textContent = movie.vote_average ? `★ ${movie.vote_average.toFixed(1)}/10` : 'New';
+    modalDate.textContent = movie.release_date || movie.first_air_date || 'Unknown date';
+    modalTypeBadge.textContent = (movies.media_type || (movie.first_air_date?'TV':'Movie')).toUpperCase();
+    modalOverview.textContent = movie.overview || 'No overview available.';
+    const genres = (movie.genre_ids||[]).map(id=>GENRES_MAP[id]||'').filter(Boolean).slice(0,4);
+    modalGenres.innerHTML = genres.map(g=>`<span>${g}</span>`).join(''); || `<span> General </span>`;
+    if(apiKey && movie.id && !String(movie.id).startsWith('http')){
+        try {
+            const type = movie.media_type || (movie.first_air_date ? 'tv' : 'movie');
+            const details = await tmdbFetch(`/${type}/${movie.id}`);
+            modalOverview.textContent = details.overview || movie.overview;
+            const run = details.runtime || (details.episode_run_time[0]);
+            const rtEl = document.getElementById('modalRuntime');
+            if(rtEl) rtEl.textContent = run ? `${run}m` : (details.number_of_seasons? `${details.number_of_seasons} Season(s)` : '');
+            if(details.genres){
+                modalGenres.innerHTML = details.genres.slice(0,5).map(g=>`<span>${g.name}</span>`).join('');
+            }
+        }catch(e){ console.warn('details fail', e); }
+    }
+    modalTrailer.onclick = async ()=>{
+        if(!apiKey){ alert('Add TMDB API key to fetch trailers.'); return; }
+        try{
+            const type = movie.media_type || (movie.first_air_date ? 'tv' : 'movie');
+            const vids = await tmdbFetch(`/${type}/${movie.id}/videos`);
+            const trailer = (vids.results||[]).find(v.type==='Trailer' && v.site==='YouTube') || vids.results?.[0];
+            if(trailer){
+                window.open('https://www.youtube.com/watch?v=${trailer.key}', '_blank');
+            }
+            else alert('No trailer available');
+        }catch{ alert('Trailer not available'); }
+    };
+
+    document.getElementById('modalPlay')?.addEventListener('click', ()=> alert(`Playing: ${title} - Demo Player`));
+}
